@@ -1,63 +1,40 @@
-# 💨 Proyecto Final: Base de Datos - Psicodelia Smoke Shop
+# 💨 Gestión de Datos y Auditoría: Psicodelia Smoke Shop
 
-[cite_start]Este repositorio contiene el desarrollo integral de una solución de gestión de datos para **Psicodelia Smoke Shop**, una empresa establecida en Tijuana, B.C., enfocada en la comercialización de productos de vapeo y accesorios[cite: 21, 25]. El proyecto abarca desde el diseño relacional robusto hasta la migración automatizada a entornos NoSQL.
+Este repositorio contiene el proyecto final para la asignatura de **Base de Datos Avanzadas**. El sistema integra una arquitectura relacional completa en MySQL con un sistema de trazabilidad mediante triggers, además de un motor de migración hacia entornos NoSQL para la escalabilidad de la información.
 
-## 👥 Integrantes
-* [cite_start]**Ramirez Cardenas Luis Armando** (Matrícula: 2200607) [cite: 14]
-* [cite_start]**De La Cruz Ramirez Jeremy Yael** (Matrícula: 1270230) [cite: 12]
-* [cite_start]**Esquivel Zarate Enrique** (Matrícula: 1270230) [cite: 13]
+## 🚬 ¿Qué problemas soluciona?
+En la gestión operativa de una tienda de retail (Smoke Shop), el control preciso de inventarios y la seguridad de los registros son críticos. Este software soluciona:
+* **Centralización Operativa:** Integra en un solo esquema la gestión de clientes, empleados, sucursales, productos y procesos de facturación.
+* **Auditoría Automatizada:** Implementa un sistema de "tablas espejo" que registra cada inserción, edición o eliminación de datos, identificando al usuario y la fecha exacta del cambio.
+* **Integridad del Inventario:** Controla existencias mediante niveles de stock mínimo y máximo dentro de la tabla de almacén para evitar desabastos.
+* **Escalabilidad NoSQL:** Incluye un puente de integración para migrar datos relacionales a colecciones de MongoDB, permitiendo análisis de datos de gran volumen y flexibilidad.
 
-[cite_start]**Institución:** Universidad Autónoma de Baja California (UABC) [cite: 1]
-[cite_start]**Facultad:** Contaduría y Administración [cite: 2]
-[cite_start]**Carrera:** Inteligencia de Negocios [cite: 8]
-[cite_start]**Grupo:** 951 [cite: 15]
-[cite_start]**Profesor:** Fernando Christian Gandarilla Carrillo [cite: 19]
+## 🛠️ Tecnologías Utilizadas
+* **Base de Datos Relacional:** MySQL Workbench (Esquema SQL, Triggers y Procedimientos Almacenados).
+* **Lenguaje de Integración:** Python 3.x.
+* **Conectores:** `mysql-connector-python` y `pymongo`.
+* **Base de Datos NoSQL:** MongoDB (para persistencia escalable).
+* **Documentación:** Diagramas Entidad-Relación (DER) detallados.
 
----
+## 📊 Estructura del Sistema
+El proyecto se divide en tres capas de datos:
+1. **Capa Transaccional:** 10 tablas principales que gestionan el día a día del negocio (Ventas, Clientes, Inventario).
+2. **Capa de Auditoría:** 10 tablas y 30 triggers encargados de la trazabilidad y seguridad de la información.
+3. **Capa de Abstracción:** Vistas y procedimientos almacenados (CRUD) que facilitan la interacción con el sistema sin manipular el código SQL crudo.
 
-## 🏗️ Arquitectura del Proyecto
+## 📖 Manual de Uso
+Para poner en marcha el sistema, siga estas etapas en orden:
+1. **Despliegue SQL:** Ejecute el script `Proyecto_Final_BD_Terminado.sql` para crear el esquema `Proyecto_Final_Smoke` y cargar los procedimientos.
+2. **Carga de Datos:** Utilice los `CALL` predefinidos en el script para poblar el sistema con información de prueba de sucursales y productos.
+3. **Verificación de Auditoría:** Realice cambios en las tablas principales y consulte las `vista_auditoria_` para confirmar el registro de eventos.
+4. **Migración:** Ejecute el script de Python para transferir la base de datos de MySQL a MongoDB automáticamente.
 
-El sistema está diseñado para gestionar el ciclo operativo completo de la tienda mediante tres componentes principales:
+## 👥 Desarrolladores
+* **Ramirez Cardenas Luis Armando** - (Matrícula: 2200607)
+* **De La Cruz Ramirez Jeremy Yael** - (Matrícula: 1270230)
+* **Esquivel Zarate Enrique** - (Matrícula: 1270230)
 
-### 1. Base de Datos Relacional (MySQL)
-* [cite_start]**Esquema Principal:** 10 tablas que cubren Clientes, Marcas, Categorías, Productos, Sucursales, Proveedores, Empleados, Compras, Almacén y Facturación [cite: 122-224].
-* [cite_start]**Sistema de Auditoría:** 10 tablas espejo que registran automáticamente el tipo de evento (insert, update, delete), el usuario y la fecha para cada operación [cite: 225-299].
-* [cite_start]**Automatización:** 30 Triggers para el registro de auditoría [cite: 334-499] [cite_start]y 50 Procedimientos Almacenados que gestionan el CRUD de cada entidad [cite: 500-505].
-* [cite_start]**Vistas de Consulta:** Vistas optimizadas para reportes de auditoría y visualización rápida de datos maestros [cite: 1197-1232].
-
-### 2. Migración NoSQL (Python)
-* **Automatización:** Script de Python que conecta MySQL con MongoDB de forma dinámica.
-* **Transformación:** Conversión de tipos de datos complejos como `Decimal` a `float` y `Date` a `datetime` para compatibilidad con colecciones NoSQL.
-
----
-
-## 📂 Contenido del Repositorio
-
-| Archivo | Descripción |
-| :--- | :--- |
-| `Proyecto_Final_BD_Terminado.sql` | Script SQL completo: definición de tablas, procedimientos, triggers y carga de datos. |
-| `Proyecto Final_ Base de Datos.pdf` | [cite_start]Documentación técnica con Diagramas Entidad-Relación (DER) y reportes[cite: 27, 108]. |
-| `Exportacion de datos _bd.py` | Script para la migración automatizada de datos a MongoDB. |
-
----
-
-## 🚀 Instrucciones de Configuración
-
-### Requisitos
-* **MySQL Server 8.0+**
-* **MongoDB Community Server**
-* **Python 3.x** (Librerías: `mysql-connector-python`, `pymongo`)
-
-### Instalación
-1. [cite_start]**Base de Datos:** Importa el archivo `Proyecto_Final_BD_Terminado.sql` en MySQL Workbench o vía CLI para crear el esquema `Proyecto_Final_Smoke` [cite: 118-121].
-2. **Migración:**
-   - Asegúrate de tener los servicios de MySQL y MongoDB activos.
-   - Ejecuta el script: `python "Exportacion de datos _bd.py"`.
-
----
-
-## 📊 Conclusión
-[cite_start]Este proyecto integra técnicas avanzadas de administración de bases de datos para mejorar la gestión y seguridad de la información[cite: 1567, 1568]. [cite_start]La implementación de procedimientos y triggers permite una trazabilidad total de los movimientos comerciales, facilitando el análisis de datos estratégico[cite: 1569, 1570].
-
----
-*Lideres innovadores construyendo el futuro. [cite_start]#SOFCA* [cite: 17, 18]
+**Institución:** Universidad Autónoma de Baja California (UABC).
+**Facultad:** Contaduría y Administración.
+**Carrera:** Inteligencia de Negocios.
+**Profesor:** Fernando Christian Gandarilla Carrillo.
